@@ -497,7 +497,7 @@ body:has(.student-shell):before{animation:grid-drift 24s linear infinite}
 /* Character equipment fitting and dress-up motion */
 .item-art{background-size:contain;background-position:center;background-repeat:no-repeat}
 .mascot-art .mascot-item{background-size:contain!important;background-position:center!important;background-repeat:no-repeat;transform-origin:50% 50%;filter:drop-shadow(0 5px 5px rgba(5,30,45,.2))}
-.mascot-art .mascot-item.item-red-cap{width:90%;height:90%;left:48%;top:-29%;transform:translateX(-50%) rotate(-2deg);z-index:5}
+.mascot-art .mascot-item.item-red-cap{width:72%;height:72%;left:48%;top:-29%;transform:translateX(-50%) rotate(-2deg);z-index:5}
 .mascot-art .mascot-item.item-star-glasses{width:73%;height:73%;left:50%;top:12%;transform:translateX(-50%) rotate(-1deg);z-index:5}
 .mascot-art .mascot-item.item-headphones{width:104%;height:104%;left:50%;top:-21%;transform:translateX(-50%);z-index:5}
 .mascot-art .mascot-item.item-blue-cape{width:112%;height:112%;left:50%;top:15%;transform:translateX(-50%);z-index:1}
