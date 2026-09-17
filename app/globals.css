@@ -224,3 +224,73 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:4px solid rgba(
   .game-screen,.gacha-screen,.character-screen{border-radius:20px}
   .login-card{border-radius:22px;padding:34px 23px}.brand-mark{width:70px;height:70px;border-radius:20px;font-size:2rem}
 }
+
+/* Game lobby refresh — informed by modern learning and character games */
+body{font-family:"M PLUS Rounded 1c","Zen Maru Gothic",sans-serif;font-weight:500}
+.header-brand strong,.login-card h1,.game-screen h1,.gacha-screen h1,.character-screen h1{
+  font-family:"Dela Gothic One","M PLUS Rounded 1c",sans-serif;font-weight:400;letter-spacing:.015em
+}
+.header-brand strong{font-size:1.02rem}
+.home-content{padding-top:22px}
+.lobby-stage{
+  min-height:420px;position:relative;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;
+  border:3px solid #102b47;border-radius:30px;padding:44px 7%;color:#fff;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.07) 25%,transparent 25%) 0 0/28px 28px,
+    radial-gradient(circle at 82% 45%,rgba(80,232,186,.34),transparent 15rem),
+    linear-gradient(120deg,#152f4c 0%,#214f70 58%,#198c80 100%);
+  box-shadow:0 11px 0 #0b2035,0 28px 60px rgba(15,45,70,.25)
+}
+.lobby-stage:before,.lobby-stage:after{content:"";position:absolute;border:32px solid rgba(255,255,255,.06);border-radius:50%;pointer-events:none}
+.lobby-stage:before{width:280px;height:280px;right:-90px;top:-120px}.lobby-stage:after{width:130px;height:130px;left:42%;bottom:-100px}
+.lobby-copy{position:relative;z-index:2;align-self:center}
+.welcome-label{margin:0 0 10px;color:#8ee4cb;font:900 .75rem/1 "Nunito",sans-serif;letter-spacing:.22em}
+.lobby-copy h1{margin:0 0 26px;font-family:"Dela Gothic One","M PLUS Rounded 1c",sans-serif;font-size:clamp(2.25rem,5.4vw,4rem);font-weight:400;line-height:1.25;letter-spacing:.02em}
+.lobby-copy mark{color:var(--yellow);background:none;white-space:nowrap}
+.lobby-play{
+  width:min(390px,100%);min-height:78px;border:2px solid #ffe89b;border-radius:18px;padding:10px 13px;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:13px;text-align:left;background:var(--yellow);color:var(--navy);
+  box-shadow:0 8px 0 #d79e13,0 16px 30px rgba(4,22,38,.25);cursor:pointer
+}
+.lobby-play:hover{transform:translateY(-3px);box-shadow:0 11px 0 #d79e13,0 20px 35px rgba(4,22,38,.28)}
+.lobby-play>span{width:51px;height:51px;border-radius:14px;display:grid;place-items:center;background:#fff5ca}.lobby-play svg{width:27px;height:27px}
+.lobby-play>div{display:grid}.lobby-play small{font-weight:800;color:#795d13}.lobby-play strong{font-family:"M PLUS Rounded 1c",sans-serif;font-size:1.08rem;font-weight:800}
+.lobby-play>b{font:900 .86rem/1 "Nunito",sans-serif;letter-spacing:.1em;background:var(--navy);color:#fff;padding:11px 12px;border-radius:10px}
+.lobby-play.done{background:#d2dde2;border-color:#e5edf0;box-shadow:0 7px 0 #98aab3;cursor:default}.lobby-play.done>span{background:#edf3f5}
+.lobby-rewards{margin-top:18px;display:flex;align-items:center;gap:9px;font-size:.77rem;color:#c2dae2}.lobby-rewards>b{display:flex;align-items:center;gap:4px;padding:7px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(255,255,255,.09);color:#fff}.lobby-rewards svg{width:14px;height:14px}
+.companion-zone{min-height:310px;position:relative;display:grid;place-items:center;align-content:center;z-index:2}
+.companion-zone .mascot-large,.companion-zone .egg.mascot-large{width:205px;height:190px;margin:20px 0 2px;z-index:3}
+.companion-zone .egg.mascot-large{width:168px;height:194px;background:linear-gradient(135deg,#fff8d9,#ffd36d);font-size:2.8rem;box-shadow:inset -12px -12px rgba(218,155,27,.13),0 18px 0 rgba(8,36,55,.12),0 30px 40px rgba(4,27,43,.24)}
+.companion-glow{position:absolute;width:290px;height:290px;border-radius:50%;background:radial-gradient(circle,rgba(151,255,219,.42),rgba(95,218,183,.08) 52%,transparent 72%);filter:blur(2px)}
+.companion-speech{position:absolute;top:0;right:2%;padding:11px 15px;border-radius:16px 16px 4px 16px;background:#fff;color:var(--navy);font-size:.78rem;font-weight:800;box-shadow:0 7px 0 rgba(7,35,54,.12)}
+.companion-status{width:min(310px,90%);padding:12px 14px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(7,36,55,.48);backdrop-filter:blur(8px);z-index:4}
+.companion-status>div:first-child{display:flex;justify-content:space-between;gap:10px;font-size:.72rem}.companion-status span{color:#b6d9df;font-weight:700}.companion-status b{font-size:.72rem}.mini-progress{height:8px;margin-top:8px;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.14)}.mini-progress i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#69e6b8,var(--yellow))}
+.stage-stamp{position:absolute;right:20px;top:20px;z-index:5;display:grid;grid-template-columns:auto auto;column-gap:8px;align-items:center;padding:9px 12px;border:1px solid rgba(255,255,255,.16);border-radius:13px;background:rgba(7,36,55,.46);backdrop-filter:blur(8px)}
+.stage-stamp svg{grid-row:1/3;width:22px;color:var(--yellow)}.stage-stamp span{color:#b8d4dc;font-size:.62rem;font-weight:700}.stage-stamp b{font:900 1rem/1 "Nunito",sans-serif}
+.lesson-card{margin-top:24px;padding:18px 20px;border-color:#b7e3d4;background:linear-gradient(90deg,#f3fff9,#fff)}
+.lesson-card h2{font-family:"M PLUS Rounded 1c",sans-serif;font-weight:800}.lesson-form button{min-width:78px;font-family:"Nunito",sans-serif;letter-spacing:.08em}
+.level-heading{align-items:center}.level-heading>span{font-size:.76rem;color:var(--muted);font-weight:700}.level-heading h2{font-family:"Dela Gothic One","M PLUS Rounded 1c",sans-serif;font-size:1.45rem;font-weight:400;letter-spacing:.015em}
+.level-card{min-height:168px}.level-card h3{font-family:"Dela Gothic One","M PLUS Rounded 1c",sans-serif;font-size:1.22rem;font-weight:400;letter-spacing:.02em}
+.quick-links{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.quick-links button{border:2px solid #d7e4e9;border-radius:18px;padding:16px 18px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;background:#fff;text-align:left;box-shadow:0 6px 0 rgba(22,50,79,.06);cursor:pointer}
+.quick-links button:first-child{background:#fff9e8;border-color:#f1d795}.quick-links button:last-child{background:#ebf7ff;border-color:#bdddef}
+.quick-links button>svg{width:30px;height:30px;padding:7px;box-sizing:content-box;border-radius:13px;background:var(--yellow);color:var(--navy)}.quick-links button:last-child>svg{background:#ccecff;color:#225fa8}
+.quick-links span{display:grid}.quick-links small{color:var(--muted);font-size:.68rem;font-weight:700}.quick-links b{font-family:"M PLUS Rounded 1c",sans-serif;font-size:1rem;font-weight:800}.quick-links strong{font-size:1.35rem}
+.game-dock{position:sticky;bottom:12px;z-index:45;width:min(560px,calc(100% - 24px));margin:30px auto 0;padding:7px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;border:2px solid #d7e2e8;border-radius:20px;background:rgba(255,255,255,.94);box-shadow:0 10px 0 rgba(22,50,79,.08),0 22px 45px rgba(22,50,79,.18);backdrop-filter:blur(18px)}
+.game-dock button{min-height:57px;border:0;border-radius:13px;display:grid;place-items:center;align-content:center;gap:2px;background:transparent;color:#6b8090;cursor:pointer}.game-dock button svg{width:21px;height:21px;stroke-width:2.5}.game-dock button span{font-size:.64rem;font-weight:800}.game-dock button.active{background:var(--navy);color:#fff;box-shadow:0 4px 0 #0b2136}.game-dock button.active svg{color:var(--yellow)}
+.student-footer{margin-top:18px;padding-bottom:8px}
+
+@media(max-width:720px){
+  .student-shell{padding-bottom:108px}.home-content{padding-top:15px}
+  .lobby-stage{min-height:500px;display:flex;flex-direction:column;padding:26px 20px 24px;border-radius:22px;text-align:center}
+  .lobby-copy{width:100%;display:contents}.welcome-label{order:1}.lobby-copy h1{order:2;margin:0 0 5px;font-size:1.85rem;line-height:1.35}
+  .companion-zone{order:3;width:100%;min-height:220px}.companion-zone .mascot-large,.companion-zone .egg.mascot-large{width:145px;height:135px;margin:14px 0 0}.companion-zone .egg.mascot-large{width:112px;height:138px;font-size:2rem}
+  .companion-glow{width:220px;height:220px}.companion-speech{top:3px;right:2%;font-size:.67rem;padding:8px 11px}.companion-status{width:88%;padding:9px 11px}
+  .lobby-play{order:4;width:100%;min-height:68px;margin-top:8px}.lobby-rewards{order:5;margin:15px auto 0}.stage-stamp{right:12px;top:12px}.stage-stamp span{display:none}.stage-stamp b{font-size:.9rem}
+  .lesson-card{margin-top:18px}.level-heading>span{display:none}.level-heading h2{font-size:1.18rem}
+  .level-card{min-height:116px}.level-card h3{font-size:1.05rem}.quick-links{grid-template-columns:1fr;gap:10px}
+  .game-dock{position:fixed;left:10px;right:10px;bottom:9px;width:auto;margin:0;border-radius:18px;padding:6px}.game-dock button{min-height:54px}
+  .student-footer{margin-bottom:0}.student-footer span{display:none}
+}
+
+@media(min-width:721px){.game-dock+.student-footer{margin-top:12px}}

@@ -4,6 +4,10 @@ import "@fontsource/zen-maru-gothic/700.css";
 import "@fontsource/zen-maru-gothic/900.css";
 import "@fontsource/nunito/800.css";
 import "@fontsource/nunito/900.css";
+import "@fontsource/m-plus-rounded-1c/500.css";
+import "@fontsource/m-plus-rounded-1c/700.css";
+import "@fontsource/m-plus-rounded-1c/800.css";
+import "@fontsource/dela-gothic-one/400.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
