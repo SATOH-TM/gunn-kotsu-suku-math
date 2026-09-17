@@ -493,3 +493,41 @@ body:has(.student-shell):before{animation:grid-drift 24s linear infinite}
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
+
+/* Character equipment fitting and dress-up motion */
+.item-art{background-size:contain;background-position:center;background-repeat:no-repeat}
+.mascot-art .mascot-item{background-size:contain!important;background-position:center!important;background-repeat:no-repeat;transform-origin:50% 50%;filter:drop-shadow(0 5px 5px rgba(5,30,45,.2))}
+.mascot-art .item-red-cap{width:68%;height:68%;left:48%;top:-18%;transform:translateX(-50%) rotate(-2deg);z-index:5}
+.mascot-art .item-star-glasses{width:57%;height:57%;left:50%;top:18%;transform:translateX(-50%) rotate(-1deg);z-index:5}
+.mascot-art .item-headphones{width:82%;height:82%;left:50%;top:-10%;transform:translateX(-50%);z-index:5}
+.mascot-art .item-blue-cape{width:92%;height:92%;left:50%;top:24%;transform:translateX(-50%);z-index:1}
+.mascot-art .item-mini-bag{width:61%;height:61%;left:79%;top:34%;transform:translateX(-50%) rotate(4deg);z-index:1}
+.mascot-art .item-magic-wand{width:57%;height:57%;left:87%;top:38%;transform:translateX(-50%) rotate(17deg);z-index:5}
+.mascot-art .item-leaf-crown{width:72%;height:72%;left:50%;top:-22%;transform:translateX(-50%) rotate(-1deg);z-index:5}
+.mascot-art .item-space-ring{width:138%;height:138%;left:50%;top:5%;transform:translateX(-50%);z-index:1;animation:wear-ring 7s linear infinite}
+.mascot-art .item-rainbow{width:142%;height:142%;left:50%;top:3%;transform:translateX(-50%);z-index:1;animation:wear-rainbow 2.7s ease-in-out infinite}
+.mascot-art .item-night-bg{width:152%;height:152%;left:50%;top:-17%;transform:translateX(-50%);z-index:0;opacity:.95}
+.mascot-art .item-flower{width:67%;height:67%;left:48%;top:35%;transform:translateX(-50%) rotate(-4deg);z-index:5}
+.mascot-art .item-game-pad{width:55%;height:55%;left:50%;top:55%;transform:translateX(-50%) rotate(-2deg);z-index:6;filter:drop-shadow(0 7px 5px rgba(5,30,45,.28))}
+
+.partner-motion{position:relative;z-index:3;display:grid;place-items:center;animation:dress-pop .58s cubic-bezier(.18,.89,.32,1.28) both}
+.partner-motion .mascot-art{animation:partner-idle 4s ease-in-out .58s infinite}
+.character-preview:after{content:"";position:absolute;z-index:2;bottom:67px;width:195px;height:28px;border-radius:50%;background:rgba(3,26,42,.28);filter:blur(6px);animation:partner-shadow 4s ease-in-out .58s infinite}
+.character-preview .preview-grid{animation:preview-grid-move 18s linear infinite}
+.dress-sparkles{position:absolute;z-index:6;left:50%;top:47%;width:250px;height:230px;transform:translate(-50%,-50%);pointer-events:none}
+.dress-sparkles i{position:absolute;width:12px;height:12px;background:#ffe16b;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);opacity:0;animation:dress-spark .72s ease-out both}
+.dress-sparkles i:nth-child(1){left:8%;top:48%;--tx:-30px;--ty:-5px}.dress-sparkles i:nth-child(2){left:22%;top:18%;--tx:-18px;--ty:-25px;animation-delay:.04s}.dress-sparkles i:nth-child(3){left:49%;top:4%;--tx:0;--ty:-28px;animation-delay:.08s}.dress-sparkles i:nth-child(4){right:19%;top:19%;--tx:20px;--ty:-24px;animation-delay:.12s}.dress-sparkles i:nth-child(5){right:6%;top:49%;--tx:31px;--ty:-3px;animation-delay:.16s}.dress-sparkles i:nth-child(6){right:18%;bottom:13%;--tx:22px;--ty:24px;animation-delay:.2s}.dress-sparkles i:nth-child(7){left:47%;bottom:3%;--tx:0;--ty:29px;animation-delay:.24s}.dress-sparkles i:nth-child(8){left:16%;bottom:17%;--tx:-24px;--ty:20px;animation-delay:.28s}
+.item-grid button{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}.item-grid button:active{transform:translateY(2px) scale(.97)}.item-grid button.equipped>.item-art{animation:closet-item-pop .48s cubic-bezier(.18,.89,.32,1.28)}
+
+@keyframes dress-pop{0%{transform:scale(.72) rotate(-5deg);opacity:.35}62%{transform:scale(1.08) rotate(2deg);opacity:1}100%{transform:none;opacity:1}}
+@keyframes partner-idle{0%,100%{transform:translateY(0) rotate(-.7deg)}48%{transform:translateY(-10px) rotate(.7deg)}54%{transform:translateY(-10px) rotate(.7deg)}}
+@keyframes partner-shadow{0%,100%{transform:scaleX(1);opacity:.75}50%{transform:scaleX(.82);opacity:.45}}
+@keyframes preview-grid-move{to{background-position:34px 34px}}
+@keyframes dress-spark{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}26%{opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(1.45) rotate(90deg);opacity:0}}
+@keyframes wear-ring{to{transform:translateX(-50%) rotate(360deg)}}
+@keyframes wear-rainbow{0%,100%{transform:translateX(-50%) scale(.98);filter:drop-shadow(0 0 4px rgba(255,222,132,.25))}50%{transform:translateX(-50%) scale(1.04);filter:drop-shadow(0 0 12px rgba(255,222,132,.7))}}
+@keyframes closet-item-pop{0%{transform:scale(.75)}70%{transform:scale(1.1)}100%{transform:scale(1)}}
+
+@media(max-width:720px){
+  .character-preview:after{bottom:53px;width:165px}.dress-sparkles{width:210px;height:195px}.mascot-art .item-game-pad{top:54%}
+}

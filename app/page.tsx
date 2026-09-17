@@ -15,9 +15,7 @@ function GameIcon({ name, className = "" }: { name: GameIconName; className?: st
 }
 
 function ItemArt({ id, className = "" }: { id: string; className?: string }) {
-  const index = gachaItems.findIndex((x) => x.id === id);
-  const col = Math.max(0, index) % 4; const row = Math.floor(Math.max(0, index) / 4);
-  return <span className={`item-art item-${id} ${className}`} style={{ backgroundPosition: `${(col / 3) * 100}% ${(row / 2) * 100}%` }} aria-hidden="true" />;
+  return <span className={`item-art item-${id} ${className}`} style={{ backgroundImage: `url('/gunn-kotsu-suku-math/art/items/${id}.webp')` }} aria-hidden="true" />;
 }
 
 function Mascot({ student, large = false }: { student: Student; large?: boolean }) {
@@ -108,8 +106,9 @@ function Character({ student, onStudent }: { student: Student; onStudent: (s: St
     const sameCategory = new Set<string>(gachaItems.filter((x) => x.kind === item.kind).map((x) => x.id));
     onStudent({ ...student, equipped: [...student.equipped.filter((x) => !sameCategory.has(x)), id] });
   }
+  const equipmentKey = student.equipped.join("-") || "none";
   return <section className="character-screen">
-    <div className="character-hero"><div className="character-preview"><div className="preview-grid" /><span className="preview-label">MY PARTNER</span><Mascot student={student} large /><div className="equipped-count"><Sparkles />装備中 {student.equipped.length}個</div></div><div className="character-info"><p className="eyebrow">あなたの相棒</p><h1>{stage.name}</h1><p className="partner-message">問題に挑戦して、一緒に成長しよう。アイテムはカテゴリごとに1つずつ、複数同時に装備できます。</p><div className="growth-panel"><div><span>次の成長まで</span><b>{student.points} / {stage.next} pt</b></div><div className="progress"><i style={{ width: `${percent}%` }} /></div><p>{student.points < 30 ? `あと${30 - student.points}ptで次の姿へ！` : "正解するたびに成長ゲージがたまるよ。"}</p></div></div></div>
+    <div className="character-hero"><div className="character-preview"><div className="preview-grid" /><span className="preview-label">MY PARTNER</span><div className="dress-sparkles" key={`spark-${equipmentKey}`}>{Array.from({ length: 8 }, (_, i) => <i key={i} />)}</div><div className="partner-motion" key={`partner-${equipmentKey}`}><Mascot student={student} large /></div><div className="equipped-count"><Sparkles />装備中 {student.equipped.length}個</div></div><div className="character-info"><p className="eyebrow">あなたの相棒</p><h1>{stage.name}</h1><p className="partner-message">問題に挑戦して、一緒に成長しよう。アイテムはカテゴリごとに1つずつ、複数同時に装備できます。</p><div className="growth-panel"><div><span>次の成長まで</span><b>{student.points} / {stage.next} pt</b></div><div className="progress"><i style={{ width: `${percent}%` }} /></div><p>{student.points < 30 ? `あと${30 - student.points}ptで次の姿へ！` : "正解するたびに成長ゲージがたまるよ。"}</p></div></div></div>
     {student.points >= 120 && <div className="evolution-picker"><div><p className="eyebrow">STYLE</p><h2>せいかくをえらぶ</h2></div><div>{(["ふわふわ", "メカ", "しぜん", "ふしぎ"] as const).map((x) => <button className={student.evolution === x ? "selected" : ""} onClick={() => onStudent({ ...student, evolution: x })} key={x}>{x}</button>)}</div></div>}
     <div className="closet"><div className="closet-title"><div><p className="eyebrow">DRESS UP</p><h2>アイテムをえらぶ</h2></div><span>同じ種類は1つ、種類が違えば同時に装備できます</span></div>{student.inventory.length ? <div className="item-grid">{gachaItems.filter((x) => student.inventory.includes(x.id)).map((x) => <button key={x.id} className={student.equipped.includes(x.id) ? "equipped" : ""} onClick={() => toggle(x.id)}><ItemArt id={x.id} /><b>{x.name}</b><small>{x.kind}</small>{student.equipped.includes(x.id) && <i><CheckCircle2 />装備中</i>}</button>)}</div> : <div className="empty-closet">ガチャでアイテムを集めよう！</div>}</div>
   </section>;
