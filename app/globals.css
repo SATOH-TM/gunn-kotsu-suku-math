@@ -499,7 +499,7 @@ body:has(.student-shell):before{animation:grid-drift 24s linear infinite}
 .mascot-art .mascot-item{background-size:contain!important;background-position:center!important;background-repeat:no-repeat;transform-origin:50% 50%;filter:drop-shadow(0 5px 5px rgba(5,30,45,.2))}
 .mascot-art .mascot-item.item-red-cap{width:72%;height:72%;left:48%;top:-29%;transform:translateX(-50%) rotate(-2deg);z-index:5}
 .mascot-art .mascot-item.item-star-glasses{width:73%;height:73%;left:50%;top:12%;transform:translateX(-50%) rotate(-1deg);z-index:5}
-.mascot-art .mascot-item.item-headphones{width:96%;height:96%;left:50%;top:-32%;transform:translateX(-50%) scaleX(1.45);z-index:5}
+.mascot-art .mascot-item.item-headphones{width:96%;height:96%;left:50%;top:-32%;transform:translateX(-50%) scaleX(1.35);clip-path:polygon(0 0,100% 0,100% 100%,72% 100%,72% 55%,28% 55%,28% 100%,0 100%);z-index:5}
 .mascot-art .mascot-item.item-blue-cape{width:112%;height:112%;left:50%;top:15%;transform:translateX(-50%);z-index:1}
 .mascot-art .mascot-item.item-mini-bag{width:76%;height:76%;left:80%;top:27%;transform:translateX(-50%) rotate(4deg);z-index:1}
 .mascot-art .mascot-item.item-magic-wand{width:70%;height:70%;left:88%;top:32%;transform:translateX(-50%) rotate(17deg);z-index:5}
