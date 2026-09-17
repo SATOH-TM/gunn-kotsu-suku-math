@@ -497,18 +497,18 @@ body:has(.student-shell):before{animation:grid-drift 24s linear infinite}
 /* Character equipment fitting and dress-up motion */
 .item-art{background-size:contain;background-position:center;background-repeat:no-repeat}
 .mascot-art .mascot-item{background-size:contain!important;background-position:center!important;background-repeat:no-repeat;transform-origin:50% 50%;filter:drop-shadow(0 5px 5px rgba(5,30,45,.2))}
-.mascot-art .item-red-cap{width:90%;height:90%;left:48%;top:-29%;transform:translateX(-50%) rotate(-2deg);z-index:5}
-.mascot-art .item-star-glasses{width:73%;height:73%;left:50%;top:12%;transform:translateX(-50%) rotate(-1deg);z-index:5}
-.mascot-art .item-headphones{width:104%;height:104%;left:50%;top:-21%;transform:translateX(-50%);z-index:5}
-.mascot-art .item-blue-cape{width:112%;height:112%;left:50%;top:15%;transform:translateX(-50%);z-index:1}
-.mascot-art .item-mini-bag{width:76%;height:76%;left:80%;top:27%;transform:translateX(-50%) rotate(4deg);z-index:1}
-.mascot-art .item-magic-wand{width:70%;height:70%;left:88%;top:32%;transform:translateX(-50%) rotate(17deg);z-index:5}
-.mascot-art .item-leaf-crown{width:92%;height:92%;left:50%;top:-32%;transform:translateX(-50%) rotate(-1deg);z-index:5}
-.mascot-art .item-space-ring{width:138%;height:138%;left:50%;top:5%;transform:translateX(-50%);z-index:1;animation:wear-ring 7s linear infinite}
-.mascot-art .item-rainbow{width:142%;height:142%;left:50%;top:3%;transform:translateX(-50%);z-index:1;animation:wear-rainbow 2.7s ease-in-out infinite}
-.mascot-art .item-night-bg{width:152%;height:152%;left:50%;top:-17%;transform:translateX(-50%);z-index:0;opacity:.95}
-.mascot-art .item-flower{width:82%;height:82%;left:48%;top:27%;transform:translateX(-50%) rotate(-4deg);z-index:5}
-.mascot-art .item-game-pad{width:69%;height:69%;left:50%;top:48%;transform:translateX(-50%) rotate(-2deg);z-index:6;filter:drop-shadow(0 7px 5px rgba(5,30,45,.28))}
+.mascot-art .mascot-item.item-red-cap{width:90%;height:90%;left:48%;top:-29%;transform:translateX(-50%) rotate(-2deg);z-index:5}
+.mascot-art .mascot-item.item-star-glasses{width:73%;height:73%;left:50%;top:12%;transform:translateX(-50%) rotate(-1deg);z-index:5}
+.mascot-art .mascot-item.item-headphones{width:104%;height:104%;left:50%;top:-21%;transform:translateX(-50%);z-index:5}
+.mascot-art .mascot-item.item-blue-cape{width:112%;height:112%;left:50%;top:15%;transform:translateX(-50%);z-index:1}
+.mascot-art .mascot-item.item-mini-bag{width:76%;height:76%;left:80%;top:27%;transform:translateX(-50%) rotate(4deg);z-index:1}
+.mascot-art .mascot-item.item-magic-wand{width:70%;height:70%;left:88%;top:32%;transform:translateX(-50%) rotate(17deg);z-index:5}
+.mascot-art .mascot-item.item-leaf-crown{width:92%;height:92%;left:50%;top:-32%;transform:translateX(-50%) rotate(-1deg);z-index:5}
+.mascot-art .mascot-item.item-space-ring{width:138%;height:138%;left:50%;top:5%;transform:translateX(-50%);z-index:1;animation:wear-ring 7s linear infinite}
+.mascot-art .mascot-item.item-rainbow{width:142%;height:142%;left:50%;top:3%;transform:translateX(-50%);z-index:1;animation:wear-rainbow 2.7s ease-in-out infinite}
+.mascot-art .mascot-item.item-night-bg{width:152%;height:152%;left:50%;top:-17%;transform:translateX(-50%);z-index:0;opacity:.95}
+.mascot-art .mascot-item.item-flower{width:82%;height:82%;left:48%;top:27%;transform:translateX(-50%) rotate(-4deg);z-index:5}
+.mascot-art .mascot-item.item-game-pad{width:69%;height:69%;left:50%;top:48%;transform:translateX(-50%) rotate(-2deg);z-index:6;filter:drop-shadow(0 7px 5px rgba(5,30,45,.28))}
 
 .partner-motion{position:relative;z-index:3;display:grid;place-items:center;animation:dress-pop .58s cubic-bezier(.18,.89,.32,1.28) both}
 .partner-motion .mascot-art{animation:partner-idle 4s ease-in-out .58s infinite}
