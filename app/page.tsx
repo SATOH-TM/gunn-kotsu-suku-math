@@ -3,10 +3,16 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, Coins, Dices, Flame, Gift, House, LogOut, Settings, Sparkles, Sprout, Star, TicketCheck, UserRound } from "lucide-react";
+import { ArrowLeft, CheckCircle2, LogOut, Settings, Sparkles } from "lucide-react";
 import { Difficulty, GameState, Student, gachaItems, loadState, questions, rewards, saveState, stageFor, todayKey, SESSION_KEY } from "@/lib/game";
 
 type View = "home" | "game" | "gacha" | "character";
+
+type GameIconName = "home" | "daily" | "gacha" | "companion" | "gift" | "easy" | "normal" | "challenge" | "coins";
+
+function GameIcon({ name, className = "" }: { name: GameIconName; className?: string }) {
+  return <Image className={`game-icon game-icon-${name} ${className}`} src={`/gunn-kotsu-suku-math/art/ui-icons/${name}.png`} alt="" width={96} height={96} aria-hidden="true" />;
+}
 
 function ItemArt({ id, className = "" }: { id: string; className?: string }) {
   const index = gachaItems.findIndex((x) => x.id === id);
@@ -42,13 +48,13 @@ export default function StudentApp() {
   function flash(text: string) { setToast(text); window.setTimeout(() => setToast(""), 2600); }
   if (!state) return <main className="loading">よみこみ中…</main>;
   if (!student) return <Login onLogin={(s) => { setStudentCode(s.code); setState(loadState()); }} />;
-  return <main className={`student-shell view-${view}`}>{toast && <div className="toast"><CheckCircle2 size={20} />{toast}</div>}<header className="student-header"><button className="avatar-button" onClick={() => setView("character")} aria-label="キャラクターを見る"><Mascot student={student} /></button><div className="header-brand"><span>すくすく数学</span><strong>ぴったり10</strong></div><div className="wallet"><span><Star size={17} fill="currentColor" />{student.points}</span><span><Coins size={17} />{student.coins}</span></div></header>
+  return <main className={`student-shell view-${view}`}>{toast && <div className="toast"><CheckCircle2 size={20} />{toast}</div>}<header className="student-header"><button className="avatar-button" onClick={() => setView("character")} aria-label="キャラクターを見る"><Mascot student={student} /></button><div className="header-brand"><span>すくすく数学</span><strong>ぴったり10</strong></div><div className="wallet"><span><GameIcon name="normal" />{student.points}</span><span><GameIcon name="coins" />{student.coins}</span></div></header>
     {view !== "home" && <button className="back-button" onClick={() => setView("home")}><ArrowLeft size={20} />ホームにもどる</button>}
     {view === "home" && <Home student={student} state={state} onStudent={updateStudent} onView={setView} onMode={(m) => { setMode(m); setView("game"); }} flash={flash} />}
     {view === "game" && <Game student={student} mode={mode} onStudent={updateStudent} flash={flash} />}
     {view === "gacha" && <Gacha student={student} onStudent={updateStudent} flash={flash} />}
     {view === "character" && <Character student={student} onStudent={updateStudent} />}
-    <nav className="game-dock" aria-label="ゲームメニュー"><button className={view === "home" ? "active" : ""} onClick={() => setView("home")}><House /><span>ホーム</span></button><button className={view === "game" && mode === "today" ? "active" : ""} onClick={() => { setMode("today"); setView("game"); }}><Sparkles /><span>今日の1問</span></button><button className={view === "gacha" ? "active" : ""} onClick={() => setView("gacha")}><Dices /><span>ガチャ</span></button><button className={view === "character" ? "active" : ""} onClick={() => setView("character")}><UserRound /><span>相棒</span></button></nav>
+    <nav className="game-dock" aria-label="ゲームメニュー"><button className={view === "home" ? "active" : ""} onClick={() => setView("home")}><GameIcon name="home" /><span>ホーム</span></button><button className={view === "game" && mode === "today" ? "active" : ""} onClick={() => { setMode("today"); setView("game"); }}><GameIcon name="daily" /><span>今日の1問</span></button><button className={view === "gacha" ? "active" : ""} onClick={() => setView("gacha")}><GameIcon name="gacha" /><span>ガチャ</span></button><button className={view === "character" ? "active" : ""} onClick={() => setView("character")}><GameIcon name="companion" /><span>相棒</span></button></nav>
     <footer className="student-footer"><span>あせらなくて大丈夫。きょうの一歩が、ちゃんと力になる。</span><button onClick={() => { sessionStorage.removeItem(SESSION_KEY); setStudentCode(null); }}><LogOut size={16} />おわる</button><Link href="/admin"><Settings size={15} />管理</Link></footer></main>;
 }
 
@@ -57,18 +63,18 @@ function Home({ student, state, onStudent, onView, onMode, flash }: { student: S
   function claimLesson() { const active = state.lessonCode; if (!active || active.expiresAt < Date.now() || active.code !== lesson.trim()) return flash("コードがちがうか、時間が終わっています"); if (student.usedLessonCodes.includes(active.code)) return flash("このボーナスはもう受け取ったよ"); onStudent({ ...student, points: student.points + 10, coins: student.coins + 20, stamps: student.stamps + 1, usedLessonCodes: [...student.usedLessonCodes, active.code] }); setLesson(""); flash("出席ボーナス！ 10pt・20コイン GET"); }
   return <div className="home-content">
     <section className="lobby-stage">
-      <div className="lobby-copy"><p className="welcome-label">WELCOME BACK!</p><h1>今日も<br /><mark>10をつくろう</mark></h1><button className={`lobby-play ${todayDone ? "done" : ""}`} onClick={() => !todayDone && onMode("today")}><span><Sparkles /></span><div><small>今日の1問</small><strong>{todayDone ? "クリア済み！" : "スペシャル問題へ"}</strong></div><b>{todayDone ? "✓" : "PLAY"}</b></button><div className="lobby-rewards"><span>今日の報酬</span><b>30 pt</b><b><Coins />30</b></div></div>
+      <div className="lobby-copy"><p className="welcome-label">WELCOME BACK!</p><h1>今日も<br /><mark>10をつくろう</mark></h1><button className={`lobby-play ${todayDone ? "done" : ""}`} onClick={() => !todayDone && onMode("today")}><span><GameIcon name="daily" /></span><div><small>今日の1問</small><strong>{todayDone ? "クリア済み！" : "スペシャル問題へ"}</strong></div><b>{todayDone ? "✓" : "PLAY"}</b></button><div className="lobby-rewards"><span>今日の報酬</span><b>30 pt</b><b><GameIcon name="coins" />30</b></div></div>
       <div className="companion-zone"><span className="companion-speech">{todayDone ? "今日もよくできたね！" : "いっしょに挑戦しよう！"}</span><div className="companion-glow" /><Mascot student={student} large /><div className="companion-status"><div><span>{stage.name}</span><b>{student.points} / {stage.next} pt</b></div><div className="mini-progress"><i style={{ width: `${progress}%` }} /></div></div></div>
-      <div className="stage-stamp"><TicketCheck /><span>参加スタンプ</span><b>{student.stamps}</b></div>
+      <div className="stage-stamp"><GameIcon name="gift" /><span>参加スタンプ</span><b>{student.stamps}</b></div>
     </section>
-    <section className="lesson-card"><div className="lesson-icon"><Gift /></div><div><p className="eyebrow">授業に来たら</p><h2>授業コードでボーナス！</h2><p>10pt ＋ 20コイン ＋ 参加スタンプ</p></div><div className="lesson-form"><input value={lesson} onChange={(e) => setLesson(e.target.value.replace(/\D/g, "").slice(0, 4))} inputMode="numeric" placeholder="4けた" /><button onClick={claimLesson}>GET</button></div></section>
+    <section className="lesson-card"><div className="lesson-icon"><GameIcon name="gift" /></div><div><p className="eyebrow">授業に来たら</p><h2>授業コードでボーナス！</h2><p>10pt ＋ 20コイン ＋ 参加スタンプ</p></div><div className="lesson-form"><input value={lesson} onChange={(e) => setLesson(e.target.value.replace(/\D/g, "").slice(0, 4))} inputMode="numeric" placeholder="4けた" /><button onClick={claimLesson}>GET</button></div></section>
     <section className="section-head level-heading"><div><p className="eyebrow">FREE PLAY</p><h2>好きなレベルで遊ぶ</h2></div><span>何回でも挑戦できるよ</span></section>
     <div className="level-grid"><LevelCard mode="easy" title="簡単" subtitle="まずは気軽に" reward="5" icon="easy" onClick={onMode} /><LevelCard mode="normal" title="普通" subtitle="ちょうどいい" reward="10" icon="normal" onClick={onMode} /><LevelCard mode="challenge" title="チャレンジ" subtitle="腕だめし" reward="20" icon="challenge" onClick={onMode} /></div>
-    <div className="quick-links"><button onClick={() => onView("gacha")}><Dices /><span><small>50コインで1回</small><b>ガチャを引く</b></span><strong>→</strong></button><button onClick={() => onView("character")}><UserRound /><span><small>相棒を育てる</small><b>キャラクター</b></span><strong>→</strong></button></div>
+    <div className="quick-links"><button onClick={() => onView("gacha")}><GameIcon name="gacha" /><span><small>50コインで1回</small><b>ガチャを引く</b></span><strong>→</strong></button><button onClick={() => onView("character")}><GameIcon name="companion" /><span><small>相棒を育てる</small><b>キャラクター</b></span><strong>→</strong></button></div>
   </div>;
 }
 
-function LevelCard({ mode, title, subtitle, reward, icon, onClick }: { mode: Difficulty; title: string; subtitle: string; reward: string; icon: "easy" | "normal" | "challenge"; onClick: (m: Difficulty) => void }) { const Icon = icon === "easy" ? Sprout : icon === "normal" ? Star : Flame; return <button className={`level-card level-${mode}`} onClick={() => onClick(mode)}><span className="level-icon"><Icon /></span><div><p>{subtitle}</p><h3>{title}</h3><span>+{reward}pt　+{reward} <Coins size={14} /></span></div><b>→</b></button>; }
+function LevelCard({ mode, title, subtitle, reward, icon, onClick }: { mode: Difficulty; title: string; subtitle: string; reward: string; icon: "easy" | "normal" | "challenge"; onClick: (m: Difficulty) => void }) { return <button className={`level-card level-${mode}`} onClick={() => onClick(mode)}><span className="level-icon"><GameIcon name={icon} /></span><div><p>{subtitle}</p><h3>{title}</h3><span>+{reward}pt　+{reward} <GameIcon name="coins" /></span></div><b>→</b></button>; }
 
 function Game({ student, mode, onStudent, flash }: { student: Student; mode: Difficulty; onStudent: (s: Student) => void; flash: (s: string) => void }) {
   const q = questions[mode]; const [expression, setExpression] = useState(""); const [result, setResult] = useState<"idle" | "wrong" | "correct">("idle"); const labels = { today: "今日の1問", easy: "簡単", normal: "普通", challenge: "チャレンジ" };
@@ -80,7 +86,18 @@ function Game({ student, mode, onStudent, flash }: { student: Student; mode: Dif
 function Gacha({ student, onStudent, flash }: { student: Student; onStudent: (s: Student) => void; flash: (s: string) => void }) {
   const [prize, setPrize] = useState<(typeof gachaItems)[number] | null>(null); const [spinning, setSpinning] = useState(false); const remaining = gachaItems.filter((x) => !student.inventory.includes(x.id));
   function draw() { if (student.coins < 50) return flash("コインが足りないよ。問題に挑戦して集めよう！"); if (!remaining.length) return flash("アイテムを全部集めたよ！"); setSpinning(true); setPrize(null); window.setTimeout(() => { const got = remaining[Math.floor(Math.random() * remaining.length)]; onStudent({ ...student, coins: student.coins - 50, inventory: [...student.inventory, got.id] }); setPrize(got); setSpinning(false); }, 1100); }
-  return <section className="gacha-screen"><p className="eyebrow">新しいおしゃれを見つけよう</p><h1>ふしぎガチャ</h1><div className={`gacha-machine ${spinning ? "spinning" : ""}`}><div className="gacha-window">{prize ? <ItemArt id={prize.id} className="prize-art" /> : <Sparkles />}</div><div className="gacha-body"><i /><i /><i /></div></div>{prize ? <div className="prize"><p>GET!</p><strong>{prize.name}</strong><span>キャラクター画面でつけられるよ</span></div> : <p className="gacha-copy">かぶりなし。まだ持っていないアイテムが必ず出ます。</p>}<button className="primary-button gacha-button" onClick={draw} disabled={spinning}>{spinning ? "ガチャガチャ…" : "50コインでまわす"}</button><p className="gacha-count">あと {remaining.length}種類</p></section>;
+  const owned = gachaItems.length - remaining.length;
+  return <section className="gacha-screen">
+    <header className="gacha-head"><div><p className="eyebrow">CAPSULE STATION</p><h1>ふしぎガチャ</h1><p>相棒のおしゃれアイテムを集めよう</p></div><div className="gacha-balance"><GameIcon name="coins" /><span>いまのコイン</span><b>{student.coins}</b></div></header>
+    <div className="gacha-stage">
+      <div className={`gacha-machine-v2 ${spinning ? "spinning" : ""}`}><div className="machine-aura" /><Image src="/gunn-kotsu-suku-math/art/gacha-machine-v2.png" alt="カプセルが入ったふしぎガチャ" width={520} height={520} priority /><span className="machine-cost"><GameIcon name="coins" />50</span></div>
+      <div className={`gacha-result ${prize ? "has-prize" : ""}`}>
+        {prize ? <><p className="result-label">NEW ITEM!</p><div className="prize-pedestal"><i /><ItemArt id={prize.id} className="prize-art" /></div><strong>{prize.name}</strong><span>キャラクター画面で装備できるよ</span></> : <><div className="capsule-mark"><GameIcon name="gacha" /></div><strong>なにが出るかな？</strong><span>持っていないアイテムが必ず出るよ</span></>}
+        <button className="gacha-button-v2" onClick={draw} disabled={spinning}><GameIcon name="coins" />{spinning ? "ガチャガチャ…" : "50コインでまわす"}</button>
+        <div className="collection-progress"><div><span>COLLECTION</span><b>{owned} / {gachaItems.length}</b></div><div><i style={{ width: `${(owned / gachaItems.length) * 100}%` }} /></div><small>あと {remaining.length}種類</small></div>
+      </div>
+    </div>
+  </section>;
 }
 
 function Character({ student, onStudent }: { student: Student; onStudent: (s: Student) => void }) {
