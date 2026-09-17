@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, LogOut, Settings, Sparkles } from "lucide-react";
-import { Difficulty, GameState, Student, gachaItems, loadState, questions, rewards, saveState, stageFor, todayKey, SESSION_KEY } from "@/lib/game";
+import { Difficulty, GachaRarity, GameState, Student, gachaItems, gachaRarities, loadState, questions, rewards, saveState, stageFor, todayKey, SESSION_KEY } from "@/lib/game";
 
 type View = "home" | "game" | "gacha" | "character";
 
@@ -16,6 +16,10 @@ function GameIcon({ name, className = "" }: { name: GameIconName; className?: st
 
 function ItemArt({ id, className = "" }: { id: string; className?: string }) {
   return <span className={`item-art item-${id} ${className}`} style={{ backgroundImage: `url('/gunn-kotsu-suku-math/art/items/${id}.webp')` }} aria-hidden="true" />;
+}
+
+function RarityBadge({ rarity }: { rarity: GachaRarity }) {
+  return <span className={`rarity-badge rarity-${rarity.toLowerCase()}`}>{rarity}<small>{gachaRarities[rarity].label}</small></span>;
 }
 
 function Mascot({ student, large = false }: { student: Student; large?: boolean }) {
@@ -82,19 +86,28 @@ function Game({ student, mode, onStudent, flash }: { student: Student; mode: Dif
 }
 
 function Gacha({ student, onStudent, flash }: { student: Student; onStudent: (s: Student) => void; flash: (s: string) => void }) {
-  const [prize, setPrize] = useState<(typeof gachaItems)[number] | null>(null); const [spinning, setSpinning] = useState(false); const remaining = gachaItems.filter((x) => !student.inventory.includes(x.id));
-  function draw() { if (student.coins < 50) return flash("コインが足りないよ。問題に挑戦して集めよう！"); if (!remaining.length) return flash("アイテムを全部集めたよ！"); setSpinning(true); setPrize(null); window.setTimeout(() => { const got = remaining[Math.floor(Math.random() * remaining.length)]; onStudent({ ...student, coins: student.coins - 50, inventory: [...student.inventory, got.id] }); setPrize(got); setSpinning(false); }, 1100); }
+  const [prize, setPrize] = useState<(typeof gachaItems)[number] | null>(null); const [spinning, setSpinning] = useState(false); const [catalogOpen, setCatalogOpen] = useState(false); const remaining = gachaItems.filter((x) => !student.inventory.includes(x.id));
+  useEffect(() => { if (!catalogOpen) return; const close = (event: KeyboardEvent) => event.key === "Escape" && setCatalogOpen(false); document.body.classList.add("modal-open"); window.addEventListener("keydown", close); return () => { document.body.classList.remove("modal-open"); window.removeEventListener("keydown", close); }; }, [catalogOpen]);
+  function pickPrize() {
+    const availableRanks = (["N", "R", "SR"] as const).filter((rank) => remaining.some((item) => item.rarity === rank));
+    const total = availableRanks.reduce((sum, rank) => sum + gachaRarities[rank].rate, 0); let roll = Math.random() * total; let chosen = availableRanks[0];
+    for (const rank of availableRanks) { roll -= gachaRarities[rank].rate; if (roll <= 0) { chosen = rank; break; } }
+    const candidates = remaining.filter((item) => item.rarity === chosen); return candidates[Math.floor(Math.random() * candidates.length)];
+  }
+  function draw() { if (student.coins < 50) return flash("コインが足りないよ。問題に挑戦して集めよう！"); if (!remaining.length) return flash("アイテムを全部集めたよ！"); setSpinning(true); setPrize(null); window.setTimeout(() => { const got = pickPrize(); onStudent({ ...student, coins: student.coins - 50, inventory: [...student.inventory, got.id] }); setPrize(got); setSpinning(false); }, 1100); }
   const owned = gachaItems.length - remaining.length;
   return <section className="gacha-screen">
     <header className="gacha-head"><div><p className="eyebrow">CAPSULE STATION</p><h1>ふしぎガチャ</h1><p>相棒のおしゃれアイテムを集めよう</p></div><div className="gacha-balance"><GameIcon name="coins" /><span>いまのコイン</span><b>{student.coins}</b></div></header>
     <div className="gacha-stage">
       <div className={`gacha-machine-v2 ${spinning ? "spinning" : ""}`}><div className="machine-aura" /><Image src="/gunn-kotsu-suku-math/art/gacha-machine-v2.png" alt="カプセルが入ったふしぎガチャ" width={520} height={520} priority /><span className="machine-cost"><GameIcon name="coins" />50</span></div>
       <div className={`gacha-result ${prize ? "has-prize" : ""}`}>
-        {prize ? <><p className="result-label">NEW ITEM!</p><div className="prize-pedestal"><i /><ItemArt id={prize.id} className="prize-art" /></div><strong>{prize.name}</strong><span>キャラクター画面で装備できるよ</span></> : <><div className="capsule-mark"><GameIcon name="gacha" /></div><strong>なにが出るかな？</strong><span>持っていないアイテムが必ず出るよ</span></>}
+        {prize ? <><p className="result-label">NEW ITEM!</p><div className="prize-pedestal"><i /><ItemArt id={prize.id} className="prize-art" /></div><RarityBadge rarity={prize.rarity} /><strong>{prize.name}</strong><span>キャラクター画面で装備できるよ</span></> : <><div className="capsule-mark"><GameIcon name="gacha" /></div><strong>なにが出るかな？</strong><span>持っていないアイテムが必ず出るよ</span></>}
         <button className="gacha-button-v2" onClick={draw} disabled={spinning}><GameIcon name="coins" />{spinning ? "ガチャガチャ…" : "50コインでまわす"}</button>
+        <button className="catalog-button" onClick={() => setCatalogOpen(true)}>景品一覧・提供割合</button>
         <div className="collection-progress"><div><span>COLLECTION</span><b>{owned} / {gachaItems.length}</b></div><div><i style={{ width: `${(owned / gachaItems.length) * 100}%` }} /></div><small>あと {remaining.length}種類</small></div>
       </div>
     </div>
+    {catalogOpen && <div className="catalog-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setCatalogOpen(false)}><section className="gacha-catalog" role="dialog" aria-modal="true" aria-labelledby="catalog-title"><header><div><p className="eyebrow">ITEM LIST</p><h2 id="catalog-title">ガチャで出るもの</h2></div><button onClick={() => setCatalogOpen(false)} aria-label="閉じる">×</button></header><div className="rarity-rates">{(["N", "R", "SR"] as const).map((rank) => <div className={`rate-card rate-${rank.toLowerCase()}`} key={rank}><RarityBadge rarity={rank} /><b>{gachaRarities[rank].rate}%</b></div>)}</div><p className="rate-note">未所持アイテムの中から抽選します。同じランク内のアイテムは同じ確率です。集め終わったランクの割合は、残っているランクへ振り分けられます。</p><div className="catalog-grid">{gachaItems.map((item) => <article className={student.inventory.includes(item.id) ? "owned" : ""} key={item.id}><RarityBadge rarity={item.rarity} /><ItemArt id={item.id} /><strong>{item.name}</strong><small>{student.inventory.includes(item.id) ? "✓ もっている" : item.kind}</small></article>)}</div></section></div>}
   </section>;
 }
 
@@ -110,6 +123,6 @@ function Character({ student, onStudent }: { student: Student; onStudent: (s: St
   return <section className="character-screen">
     <div className="character-hero"><div className="character-preview"><div className="preview-grid" /><span className="preview-label">MY PARTNER</span><div className="dress-sparkles" key={`spark-${equipmentKey}`}>{Array.from({ length: 8 }, (_, i) => <i key={i} />)}</div><div className="partner-motion" key={`partner-${equipmentKey}`}><Mascot student={student} large /></div><div className="equipped-count"><Sparkles />装備中 {student.equipped.length}個</div></div><div className="character-info"><p className="eyebrow">あなたの相棒</p><h1>{stage.name}</h1><p className="partner-message">問題に挑戦して、一緒に成長しよう。アイテムはカテゴリごとに1つずつ、複数同時に装備できます。</p><div className="growth-panel"><div><span>次の成長まで</span><b>{student.points} / {stage.next} pt</b></div><div className="progress"><i style={{ width: `${percent}%` }} /></div><p>{student.points < 30 ? `あと${30 - student.points}ptで次の姿へ！` : "正解するたびに成長ゲージがたまるよ。"}</p></div></div></div>
     {student.points >= 120 && <div className="evolution-picker"><div><p className="eyebrow">STYLE</p><h2>せいかくをえらぶ</h2></div><div>{(["ふわふわ", "メカ", "しぜん", "ふしぎ"] as const).map((x) => <button className={student.evolution === x ? "selected" : ""} onClick={() => onStudent({ ...student, evolution: x })} key={x}>{x}</button>)}</div></div>}
-    <div className="closet"><div className="closet-title"><div><p className="eyebrow">DRESS UP</p><h2>アイテムをえらぶ</h2></div><span>同じ種類は1つ、種類が違えば同時に装備できます</span></div>{student.inventory.length ? <div className="item-grid">{gachaItems.filter((x) => student.inventory.includes(x.id)).map((x) => <button key={x.id} className={student.equipped.includes(x.id) ? "equipped" : ""} onClick={() => toggle(x.id)}><ItemArt id={x.id} /><b>{x.name}</b><small>{x.kind}</small>{student.equipped.includes(x.id) && <i><CheckCircle2 />装備中</i>}</button>)}</div> : <div className="empty-closet">ガチャでアイテムを集めよう！</div>}</div>
+    <div className="closet"><div className="closet-title"><div><p className="eyebrow">DRESS UP</p><h2>アイテムをえらぶ</h2></div><span>同じ種類は1つ、種類が違えば同時に装備できます</span></div>{student.inventory.length ? <div className="item-grid">{gachaItems.filter((x) => student.inventory.includes(x.id)).map((x) => <button key={x.id} className={student.equipped.includes(x.id) ? "equipped" : ""} onClick={() => toggle(x.id)}><RarityBadge rarity={x.rarity} /><ItemArt id={x.id} /><b>{x.name}</b><small>{x.kind}</small>{student.equipped.includes(x.id) && <i><CheckCircle2 />装備中</i>}</button>)}</div> : <div className="empty-closet">ガチャでアイテムを集めよう！</div>}</div>
   </section>;
 }
