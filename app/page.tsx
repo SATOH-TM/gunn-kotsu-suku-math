@@ -36,6 +36,7 @@ function Login({ onLogin }: { onLogin: (student: Student) => void }) {
 export default function StudentApp() {
   const [state, setState] = useState<GameState | null>(null); const [studentCode, setStudentCode] = useState<string | null>(null); const [view, setView] = useState<View>("home"); const [mode, setMode] = useState<Difficulty>("easy"); const [toast, setToast] = useState("");
   useEffect(() => { queueMicrotask(() => { setState(loadState()); setStudentCode(sessionStorage.getItem(SESSION_KEY)); }); }, []);
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [view]);
   const student = useMemo(() => state?.students.find((s) => s.code === studentCode) ?? null, [state, studentCode]);
   function updateStudent(next: Student) { if (!state) return; const nextState = { ...state, students: state.students.map((s) => s.code === next.code ? next : s) }; setState(nextState); saveState(nextState); }
   function flash(text: string) { setToast(text); window.setTimeout(() => setToast(""), 2600); }
