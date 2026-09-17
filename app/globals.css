@@ -56,3 +56,171 @@ button:focus-visible,a:focus-visible,input:focus-visible { outline:4px solid rgb
 .admin-login{min-height:100vh;display:grid;place-items:center;padding:25px}.admin-login form{width:min(430px,100%);background:#fff;border-radius:30px;padding:40px;box-shadow:var(--shadow);display:grid;gap:12px}.admin-login h1{margin:0 0 20px}.admin-login input{border:2px solid var(--line);border-radius:15px;padding:15px}.admin-login a{display:flex;align-items:center;justify-content:center;gap:5px;color:#73798d;text-decoration:none;font-size:.83rem;margin-top:8px}.admin-login small{text-align:center;color:#a1a4b0}.admin-badge{width:58px;height:58px;border-radius:17px;display:grid;place-items:center;background:#e9edff;color:#5b68c9}
 .admin-shell{width:min(1180px,100%);margin:auto;padding:35px 24px 60px}.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:30px}.admin-header h1{margin:0;font-size:2rem}.admin-header a{display:flex;align-items:center;gap:7px;text-decoration:none;color:#61687e;font-weight:800}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.stat-grid>div{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 20px rgba(51,59,89,.06);display:grid;grid-template-columns:auto 1fr;column-gap:13px}.stat-grid span{grid-row:1/3;width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:#eef0ff;color:#5d69cc}.stat-grid p{margin:0;color:#85899a;font-size:.76rem;font-weight:800}.stat-grid b{font-size:1.5rem}.admin-card{margin-top:18px;background:#fff;border-radius:25px;padding:27px;box-shadow:0 8px 25px rgba(51,59,89,.06)}.admin-card h2{margin:0}.lesson-admin{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:25px}.lesson-admin>div:first-child>p:last-child{color:#85899a;font-size:.8rem}.active-code{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 15px;padding:15px 20px;border-radius:18px;background:#eff2ff}.active-code span{font-size:.7rem;color:#7c8196;font-weight:800}.active-code strong{grid-row:1/3;font-size:2.2rem;letter-spacing:.17em;color:#5562c5}.active-code button{border:0;background:none;font-size:.72rem;display:flex;align-items:center;gap:4px;cursor:pointer}.inactive-code{color:#9296a4}.admin-action{border:0;border-radius:14px;padding:13px 17px;background:#5d6ed7;color:#fff;font-weight:900;display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer}.admin-title{display:flex;justify-content:space-between;align-items:center;gap:20px}.admin-title>div:last-child{display:flex;gap:8px}.admin-title>div:last-child>button:first-child{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 15px;display:flex;align-items:center;gap:6px;cursor:pointer}.student-table-wrap{overflow-x:auto;margin-top:20px}.student-table{width:100%;border-collapse:collapse;min-width:720px}.student-table th{text-align:left;color:#8a8e9e;font-size:.72rem;padding:10px;border-bottom:1px solid var(--line)}.student-table td{padding:13px 10px;border-bottom:1px solid #f0f1f5;font-size:.85rem}.student-table input{width:85px;border:1px solid var(--line);border-radius:9px;padding:8px}.copy-code,.status,.tiny-add{border:0;border-radius:10px;padding:8px 10px;display:inline-flex;align-items:center;gap:6px;font-weight:800;cursor:pointer}.copy-code{background:#f3f4f8}.status.on{color:#24865a;background:#e7f7ef}.status.off{color:#b05463;background:#ffedef}.tiny-add{background:#fff2d0;color:#ae7914}.save-hint{font-size:.72rem;color:#999caa;margin-bottom:0}.admin-log{list-style:none;padding:0;margin:15px 0 0}.admin-log li{padding:10px 0;border-bottom:1px solid #f0f1f5;font-size:.82rem}.admin-footer{display:flex;gap:10px;margin-top:22px;padding:17px;color:#7e8294;background:#eceef5;border-radius:15px;font-size:.76rem}.admin-footer b{color:#5f67a9}
 @media(max-width:760px){.admin-shell{padding:24px 13px}.admin-header h1{font-size:1.5rem}.admin-header a{font-size:.76rem}.stat-grid{grid-template-columns:1fr 1fr}.lesson-admin{grid-template-columns:1fr}.admin-title{align-items:flex-start;flex-direction:column}.admin-title>div:last-child{width:100%}.admin-title>div:last-child button{flex:1}.admin-footer{display:grid}}
+
+/* 2026 visual refresh */
+:root{
+  --ink:#17324d;
+  --navy:#16324f;
+  --blue:#3767e8;
+  --sky:#dff3ff;
+  --mint:#c9f2df;
+  --green:#25a77a;
+  --yellow:#ffd25a;
+  --orange:#ff8b5c;
+  --coral:#f56565;
+  --cream:#fffaf0;
+  --paper:#ffffff;
+  --line:#dbe5ec;
+  --muted:#62778a;
+  --shadow:0 18px 0 rgba(22,50,79,.05),0 26px 55px rgba(22,50,79,.12);
+}
+html{background:#f3f8f8}
+body{
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 4%,rgba(66,197,163,.17),transparent 24rem),
+    radial-gradient(circle at 94% 10%,rgba(55,103,232,.12),transparent 27rem),
+    linear-gradient(rgba(22,50,79,.026) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(22,50,79,.026) 1px,transparent 1px),
+    #f3f8f8;
+  background-size:auto,auto,28px 28px,28px 28px,auto;
+  font-family:"Zen Maru Gothic","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-weight:500;
+  letter-spacing:.015em;
+}
+h1,h2,h3,strong,b,.brand-mark,.wallet,.number-row,.operator-row{
+  font-family:"Nunito","Zen Maru Gothic",sans-serif;
+}
+h1,h2,h3{letter-spacing:-.025em}
+button{transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
+button:hover{filter:brightness(1.015)}
+button:active{transform:translateY(2px) scale(.99)!important}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:4px solid rgba(55,103,232,.25);outline-offset:3px}
+.eyebrow{color:#597185;font-size:.72rem;letter-spacing:.18em;font-weight:900}
+.primary-button{
+  border-radius:15px;
+  background:var(--navy);
+  box-shadow:0 7px 0 #0b2136,0 14px 28px rgba(22,50,79,.18);
+  font-weight:900;
+}
+.primary-button:hover{transform:translateY(-2px);box-shadow:0 9px 0 #0b2136,0 18px 32px rgba(22,50,79,.2)}
+
+.login-shell{
+  background:linear-gradient(135deg,#14314d 0%,#1f4961 58%,#2d8f82 100%);
+}
+.login-shell:before{
+  content:"10";position:absolute;right:-.04em;bottom:-.3em;color:rgba(255,255,255,.055);
+  font:900 min(70vw,760px)/1 "Nunito",sans-serif;transform:rotate(-8deg)
+}
+.login-card{
+  border:0;border-radius:28px;padding:44px 46px 38px;background:#fffdf7;
+  box-shadow:0 18px 0 rgba(6,26,43,.18),0 38px 80px rgba(5,25,42,.3);backdrop-filter:none
+}
+.brand-mark{
+  width:82px;height:82px;border-radius:23px;margin-bottom:21px;background:var(--yellow);color:var(--navy);
+  transform:rotate(-5deg);box-shadow:7px 8px 0 var(--navy);font-size:2.4rem
+}
+.login-card h1{color:var(--navy);font-weight:900;letter-spacing:-.035em}
+.login-copy{color:var(--muted);font-weight:700}
+.login-card label{color:var(--navy)}
+.login-card input{border:2px solid #cbd9e2;background:#fff;border-radius:13px;padding:15px 16px;box-shadow:inset 0 2px 0 rgba(22,50,79,.03)}
+.login-card .primary-button{background:var(--blue);box-shadow:0 7px 0 #2149b7,0 14px 25px rgba(55,103,232,.22)}
+.cloud{opacity:.08;background:#fff;filter:none}
+
+.student-shell{width:min(1080px,100%);padding-top:14px}
+.student-header{
+  min-height:76px;top:10px;border:0;border-radius:19px;background:rgba(22,50,79,.96);color:#fff;
+  box-shadow:0 8px 0 rgba(11,33,54,.12),0 18px 35px rgba(22,50,79,.16);backdrop-filter:blur(14px)
+}
+.avatar-button{background:#e8fff5;border-radius:14px;border:2px solid rgba(255,255,255,.2)}
+.header-brand span{color:#9fbecc}.header-brand strong{font-size:1.18rem;letter-spacing:.01em}
+.wallet span{border-radius:11px;padding:9px 12px;background:#fff!important}
+.wallet span:first-child{color:#a96c00}.wallet span:last-child{color:#2854b6}
+.home-content{padding-top:24px}
+.hero-card{
+  min-height:295px;padding:38px 8%;border:2px solid #d8e5e6;border-radius:26px;color:var(--navy);
+  background:linear-gradient(115deg,#fffdf5 0%,#eefbf5 63%,#cef1e1 100%);
+  box-shadow:var(--shadow)
+}
+.hero-card:before{width:250px;height:250px;border:45px solid rgba(37,167,122,.1);right:-70px;top:-100px}
+.hero-card:after{width:105px;height:105px;border:28px solid rgba(55,103,232,.08);left:48%;bottom:-80px}
+.hero-card p{color:#3d826f;opacity:1;letter-spacing:.08em}
+.hero-card h1{font-weight:900;letter-spacing:-.04em}
+.hero-card mark{color:var(--blue);position:relative}
+.hero-card mark:after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:7px;background:var(--yellow);border-radius:99px;z-index:-1}
+.stamp-count{color:var(--navy);background:#fff;border:1px solid #dbe8e5;box-shadow:0 5px 14px rgba(22,50,79,.07)}
+.mascot-art img{filter:drop-shadow(0 14px 0 rgba(22,50,79,.08)) drop-shadow(0 20px 18px rgba(22,50,79,.13))}
+.lesson-card{
+  margin-top:18px;border:2px solid #bfe8da;border-radius:19px;padding:18px 20px;background:#f5fffa;
+  box-shadow:0 8px 0 rgba(37,167,122,.06),0 14px 28px rgba(22,50,79,.06)
+}
+.lesson-icon{border-radius:13px;background:var(--mint);color:#167c5c}
+.lesson-card h2{color:var(--navy)}
+.lesson-form input{border:2px solid #acd9ca;border-radius:11px;background:#fff}
+.lesson-form button{border-radius:11px;background:var(--green);box-shadow:0 5px 0 #187b5b}
+.section-head{margin-top:35px}.section-head h2{color:var(--navy);font-weight:900}
+.reward-pill{background:var(--yellow);color:#634900;border:1px solid #efbd35;box-shadow:0 3px 0 #e5b334}
+.today-card{
+  border:2px solid #2149b7;border-radius:19px;background:linear-gradient(120deg,#315fd8,#4379f2);padding:20px 22px;
+  box-shadow:0 8px 0 #2149b7,0 18px 32px rgba(55,103,232,.2)
+}
+.today-card:hover{transform:translateY(-3px);box-shadow:0 11px 0 #2149b7,0 22px 36px rgba(55,103,232,.22)}
+.today-card.done{border-color:#718397;background:#8799aa;box-shadow:0 7px 0 #66798c}
+.today-orb{border-radius:14px;background:var(--yellow);color:var(--navy)}
+.level-grid{gap:16px}
+.level-card{
+  min-height:182px;border:2px solid var(--line);border-radius:20px;background:#fff;padding:21px;
+  box-shadow:0 7px 0 rgba(22,50,79,.08),0 16px 28px rgba(22,50,79,.07)
+}
+.level-card:hover,.feature-card:hover{transform:translateY(-4px);box-shadow:0 11px 0 rgba(22,50,79,.08),0 22px 34px rgba(22,50,79,.1)}
+.level-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;margin-bottom:17px}
+.level-icon svg{width:27px;height:27px;stroke-width:2.5}
+.level-card h3{color:var(--navy);font-weight:900}
+.level-card div>span{color:#4f687b}
+.level-easy{border-top:6px solid var(--green)}.level-easy .level-icon{background:var(--mint);color:#16815e}
+.level-normal{border-top:6px solid #f2ba25}.level-normal .level-icon{background:#fff1b8;color:#a46b00}.level-normal .level-icon svg{fill:currentColor}
+.level-challenge{border-top:6px solid var(--orange)}.level-challenge .level-icon{background:#ffe1d4;color:#d7542c}
+.feature-grid{gap:16px}
+.feature-card{min-height:150px;border:2px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 7px 0 rgba(22,50,79,.07),0 16px 28px rgba(22,50,79,.06)}
+.gacha-feature{background:#fff8e8;border-color:#f1d99b}.character-feature{background:#eaf7ff;border-color:#bfdef0}
+.feature-symbol{width:70px;height:70px;flex:none;border-radius:20px!important;display:grid;place-items:center;background:var(--yellow);color:var(--navy);font-size:0!important;transform:rotate(-4deg);box-shadow:5px 6px 0 var(--navy)}
+.feature-symbol svg{width:38px;height:38px;stroke-width:2.3}
+.feature-card h3{color:var(--navy);font-weight:900}
+.back-button{color:var(--navy)}
+.student-footer{border-color:#cfdee5;color:#708594}
+.toast{background:var(--navy);border:2px solid #fff;border-radius:12px;box-shadow:0 7px 0 rgba(11,33,54,.2),0 18px 30px rgba(22,50,79,.2)}
+
+.game-screen,.gacha-screen,.character-screen{border:2px solid #dbe7ed;border-radius:26px;box-shadow:var(--shadow);background:#fffdf8}
+.game-screen h1,.gacha-screen h1,.character-screen h1{color:var(--navy);font-weight:900}
+.number-row button{border:2px solid #bcd0ff;border-radius:17px;background:#edf3ff;color:#214fbd;box-shadow:0 6px 0 #c5d4f5;font-family:"Nunito",sans-serif}
+.expression-box{border-color:#bfccd5;border-radius:16px;background:#fff;color:#91a0ab}
+.expression-box.correct{background:#dff8ec;color:#157555;border:2px solid #a8dfca}
+.operator-row button{border:1px solid #cfdae1;border-radius:11px;background:#eef3f5;box-shadow:0 4px 0 #d2dde2}
+.clear-button{border-radius:14px;background:#e7edf0;box-shadow:0 5px 0 #d1dce1}
+.gacha-screen{background:radial-gradient(circle at 50% 30%,#fffdf6,#edf7ff)}
+.gacha-machine{background:var(--blue);border-radius:95px 95px 28px 28px;box-shadow:inset 0 -15px rgba(11,33,54,.14),0 10px 0 #2149b7,0 22px 35px rgba(22,50,79,.16)}
+.gacha-window{border-color:#a9c3ff}.gacha-body i{background:var(--yellow);border-color:var(--navy)}
+.character-stage{border:2px solid #c9e1e4;border-radius:21px;background:linear-gradient(135deg,#edfbf5,#e8f4ff)}
+.growth-panel{border:1px solid #d2e0e6;border-radius:17px;box-shadow:0 7px 0 rgba(22,50,79,.05)}
+.progress i{background:linear-gradient(90deg,var(--green),var(--blue))}
+.item-grid button{border-radius:15px;background:#f3f7f8}.item-grid button.equipped{border-color:var(--blue);background:#edf3ff}
+
+.admin-shell{width:min(1150px,100%)}
+.admin-header h1{color:var(--navy);font-weight:900}
+.stat-grid>div,.admin-card{border:1px solid #d8e4e9;border-radius:18px;box-shadow:0 7px 0 rgba(22,50,79,.045),0 16px 28px rgba(22,50,79,.06)}
+.stat-grid span{background:#dff3ff;color:#2458c3}.admin-action{background:var(--navy);border-radius:11px;box-shadow:0 5px 0 #0b2136}
+.active-code{background:#eaf7ff;border:1px solid #bfdef0}.active-code strong{color:var(--blue)}
+
+@media(max-width:720px){
+  body{background-size:auto,auto,22px 22px,22px 22px,auto}
+  .student-shell{padding:8px 11px 32px}.student-header{border-radius:15px;min-height:68px}
+  .header-brand strong{font-size:1rem}.wallet span{padding:7px 8px}
+  .hero-card{min-height:245px;border-radius:20px;padding:29px 22px}.hero-card h1{font-size:1.9rem}.hero-card p{font-size:.85rem}
+  .hero-card .mascot-large,.hero-card .egg.mascot-large{width:100px;height:94px}
+  .lesson-card{border-radius:16px;padding:16px}.today-card{border-radius:16px;padding:17px}
+  .level-grid{gap:12px}.level-card{min-height:118px;border-radius:16px;grid-template-columns:auto 1fr auto;padding:17px}
+  .level-icon{grid-column:auto;width:46px;height:46px;margin:0 15px 0 0;border-radius:13px}
+  .feature-card{border-radius:17px;padding:20px}.feature-symbol{width:60px;height:60px;border-radius:17px!important}
+  .game-screen,.gacha-screen,.character-screen{border-radius:20px}
+  .login-card{border-radius:22px;padding:34px 23px}.brand-mark{width:70px;height:70px;border-radius:20px;font-size:2rem}
+}

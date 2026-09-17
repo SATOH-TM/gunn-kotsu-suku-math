@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, Coins, Gift, LogOut, Settings, Sparkles, Star, TicketCheck } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Coins, Dices, Flame, Gift, LogOut, Settings, Sparkles, Sprout, Star, TicketCheck } from "lucide-react";
 import { Difficulty, GameState, Student, gachaItems, loadState, questions, rewards, saveState, stageFor, todayKey, SESSION_KEY } from "@/lib/game";
 
 type View = "home" | "game" | "gacha" | "character";
@@ -55,11 +55,11 @@ function Home({ student, state, onStudent, onView, onMode, flash }: { student: S
     <section className="lesson-card"><div className="lesson-icon"><Gift /></div><div><p className="eyebrow">授業に来たら</p><h2>授業コードでボーナス！</h2><p>10pt ＋ 20コイン ＋ 参加スタンプ</p></div><div className="lesson-form"><input value={lesson} onChange={(e) => setLesson(e.target.value.replace(/\D/g, "").slice(0, 4))} inputMode="numeric" placeholder="4けた" /><button onClick={claimLesson}>もらう</button></div></section>
     <section className="section-head"><div><p className="eyebrow">まずはここから</p><h2>今日の1問！</h2></div><span className="reward-pill">+30pt　+30 <Coins size={15} /></span></section>
     <button className={`today-card ${todayDone ? "done" : ""}`} onClick={() => !todayDone && onMode("today")}><div className="today-orb"><Sparkles /></div><div><strong>{todayDone ? "きょうはクリア！" : "本日のスペシャル問題"}</strong><span>{todayDone ? "また明日あそぼう" : "1日1回だけの大ボーナス"}</span></div><b>{todayDone ? "✓" : "挑戦する →"}</b></button>
-    <section className="section-head"><div><p className="eyebrow">好きなところから</p><h2>レベルをえらぶ</h2></div></section><div className="level-grid"><LevelCard mode="easy" title="簡単" subtitle="まずは気軽に" reward="5" icon="🌱" onClick={onMode} /><LevelCard mode="normal" title="普通" subtitle="ちょうどいい" reward="10" icon="⭐" onClick={onMode} /><LevelCard mode="challenge" title="チャレンジ" subtitle="むずかしいぞ" reward="20" icon="🔥" onClick={onMode} /></div>
-    <div className="feature-grid"><button className="feature-card gacha-feature" onClick={() => onView("gacha")}><span>🎁</span><div><p className="eyebrow">50コインで1回</p><h3>ガチャ</h3><p>新しいアイテムを必ずGET</p></div></button><button className="feature-card character-feature" onClick={() => onView("character")}><Mascot student={student} /><div><p className="eyebrow">じぶんだけの相棒</p><h3>キャラクター</h3><p>育てて、おしゃれしよう</p></div></button></div></div>;
+    <section className="section-head"><div><p className="eyebrow">好きなところから</p><h2>レベルをえらぶ</h2></div></section><div className="level-grid"><LevelCard mode="easy" title="簡単" subtitle="まずは気軽に" reward="5" icon="easy" onClick={onMode} /><LevelCard mode="normal" title="普通" subtitle="ちょうどいい" reward="10" icon="normal" onClick={onMode} /><LevelCard mode="challenge" title="チャレンジ" subtitle="腕だめし" reward="20" icon="challenge" onClick={onMode} /></div>
+    <div className="feature-grid"><button className="feature-card gacha-feature" onClick={() => onView("gacha")}><span className="feature-symbol"><Dices /></span><div><p className="eyebrow">50コインで1回</p><h3>ガチャ</h3><p>新しいアイテムを必ずGET</p></div></button><button className="feature-card character-feature" onClick={() => onView("character")}><Mascot student={student} /><div><p className="eyebrow">じぶんだけの相棒</p><h3>キャラクター</h3><p>育てて、おしゃれしよう</p></div></button></div></div>;
 }
 
-function LevelCard({ mode, title, subtitle, reward, icon, onClick }: { mode: Difficulty; title: string; subtitle: string; reward: string; icon: string; onClick: (m: Difficulty) => void }) { return <button className={`level-card level-${mode}`} onClick={() => onClick(mode)}><span className="level-icon">{icon}</span><div><p>{subtitle}</p><h3>{title}</h3><span>+{reward}pt　+{reward} <Coins size={14} /></span></div><b>→</b></button>; }
+function LevelCard({ mode, title, subtitle, reward, icon, onClick }: { mode: Difficulty; title: string; subtitle: string; reward: string; icon: "easy" | "normal" | "challenge"; onClick: (m: Difficulty) => void }) { const Icon = icon === "easy" ? Sprout : icon === "normal" ? Star : Flame; return <button className={`level-card level-${mode}`} onClick={() => onClick(mode)}><span className="level-icon"><Icon /></span><div><p>{subtitle}</p><h3>{title}</h3><span>+{reward}pt　+{reward} <Coins size={14} /></span></div><b>→</b></button>; }
 
 function Game({ student, mode, onStudent, flash }: { student: Student; mode: Difficulty; onStudent: (s: Student) => void; flash: (s: string) => void }) {
   const q = questions[mode]; const [expression, setExpression] = useState(""); const [result, setResult] = useState<"idle" | "wrong" | "correct">("idle"); const labels = { today: "今日の1問", easy: "簡単", normal: "普通", challenge: "チャレンジ" };
