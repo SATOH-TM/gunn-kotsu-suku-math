@@ -11,14 +11,16 @@ type View = "home" | "game" | "gacha" | "character";
 function ItemArt({ id, className = "" }: { id: string; className?: string }) {
   const index = gachaItems.findIndex((x) => x.id === id);
   const col = Math.max(0, index) % 4; const row = Math.floor(Math.max(0, index) / 4);
-  return <span className={`item-art ${className}`} style={{ backgroundPosition: `${(col / 3) * 100}% ${(row / 2) * 100}%` }} aria-hidden="true" />;
+  return <span className={`item-art item-${id} ${className}`} style={{ backgroundPosition: `${(col / 3) * 100}% ${(row / 2) * 100}%` }} aria-hidden="true" />;
 }
 
 function Mascot({ student, large = false }: { student: Student; large?: boolean }) {
-  const stage = stageFor(student.points);
-  const item = gachaItems.find((x) => student.equipped.includes(x.id));
-  if (stage.name === "たまご") return <div className={`egg ${large ? "mascot-large" : ""}`}><span>?</span></div>;
-  return <div className={`mascot mascot-art ${large ? "mascot-large" : ""} evo-${student.evolution}`}><Image src="/art/sukusuku-mascot.png" alt="丸くてふしぎな相棒" width={300} height={300} priority={large} />{item && <ItemArt id={item.id} className="mascot-item" />}</div>;
+  const equipped = gachaItems.filter((x) => student.equipped.includes(x.id));
+  return <div className={`mascot mascot-art ${large ? "mascot-large" : ""} evo-${student.evolution}`}>
+    {equipped.filter((x) => x.kind === "はいけい" || x.kind === "エフェクト").map((item) => <ItemArt key={item.id} id={item.id} className="mascot-item mascot-item-back" />)}
+    <Image src="/gunn-kotsu-suku-math/art/sukusuku-mascot.png" alt="丸くてふしぎな相棒" width={300} height={300} priority={large} />
+    {equipped.filter((x) => x.kind !== "はいけい" && x.kind !== "エフェクト").map((item) => <ItemArt key={item.id} id={item.id} className="mascot-item mascot-item-front" />)}
+  </div>;
 }
 
 function Login({ onLogin }: { onLogin: (student: Student) => void }) {
@@ -81,6 +83,16 @@ function Gacha({ student, onStudent, flash }: { student: Student; onStudent: (s:
 }
 
 function Character({ student, onStudent }: { student: Student; onStudent: (s: Student) => void }) {
-  const stage = stageFor(student.points); const percent = Math.min(100, (student.points / stage.next) * 100); function toggle(id: string) { onStudent({ ...student, equipped: student.equipped.includes(id) ? student.equipped.filter((x) => x !== id) : [id] }); }
-  return <section className="character-screen"><div className="character-stage"><div><p className="eyebrow">あなたの相棒</p><h1>{stage.name}</h1><Mascot student={student} large /></div><div className="growth-panel"><div><span>成長</span><b>{student.points} / {stage.next} pt</b></div><div className="progress"><i style={{ width: `${percent}%` }} /></div><p>{student.points < 30 ? `あと${30 - student.points}ptで、たまごがかえるかも！` : "問題にこたえるほど、相棒が育つよ。"}</p></div></div>{student.points >= 120 && <div className="evolution-picker"><h2>せいかくをえらぶ</h2><div>{(["ふわふわ", "メカ", "しぜん", "ふしぎ"] as const).map((x) => <button className={student.evolution === x ? "selected" : ""} onClick={() => onStudent({ ...student, evolution: x })} key={x}>{x}</button>)}</div></div>}<div className="closet"><h2>もっているアイテム</h2>{student.inventory.length ? <div className="item-grid">{gachaItems.filter((x) => student.inventory.includes(x.id)).map((x) => <button key={x.id} className={student.equipped.includes(x.id) ? "equipped" : ""} onClick={() => toggle(x.id)}><ItemArt id={x.id} /><b>{x.name}</b><small>{student.equipped.includes(x.id) ? "つけている" : x.kind}</small></button>)}</div> : <div className="empty-closet">ガチャでアイテムを集めよう！</div>}</div></section>;
+  const stage = stageFor(student.points); const percent = Math.min(100, (student.points / stage.next) * 100);
+  function toggle(id: string) {
+    const item = gachaItems.find((x) => x.id === id); if (!item) return;
+    if (student.equipped.includes(id)) return onStudent({ ...student, equipped: student.equipped.filter((x) => x !== id) });
+    const sameCategory = new Set<string>(gachaItems.filter((x) => x.kind === item.kind).map((x) => x.id));
+    onStudent({ ...student, equipped: [...student.equipped.filter((x) => !sameCategory.has(x)), id] });
+  }
+  return <section className="character-screen">
+    <div className="character-hero"><div className="character-preview"><div className="preview-grid" /><span className="preview-label">MY PARTNER</span><Mascot student={student} large /><div className="equipped-count"><Sparkles />装備中 {student.equipped.length}個</div></div><div className="character-info"><p className="eyebrow">あなたの相棒</p><h1>{stage.name}</h1><p className="partner-message">問題に挑戦して、一緒に成長しよう。アイテムはカテゴリごとに1つずつ、複数同時に装備できます。</p><div className="growth-panel"><div><span>次の成長まで</span><b>{student.points} / {stage.next} pt</b></div><div className="progress"><i style={{ width: `${percent}%` }} /></div><p>{student.points < 30 ? `あと${30 - student.points}ptで次の姿へ！` : "正解するたびに成長ゲージがたまるよ。"}</p></div></div></div>
+    {student.points >= 120 && <div className="evolution-picker"><div><p className="eyebrow">STYLE</p><h2>せいかくをえらぶ</h2></div><div>{(["ふわふわ", "メカ", "しぜん", "ふしぎ"] as const).map((x) => <button className={student.evolution === x ? "selected" : ""} onClick={() => onStudent({ ...student, evolution: x })} key={x}>{x}</button>)}</div></div>}
+    <div className="closet"><div className="closet-title"><div><p className="eyebrow">DRESS UP</p><h2>アイテムをえらぶ</h2></div><span>同じ種類は1つ、種類が違えば同時に装備できます</span></div>{student.inventory.length ? <div className="item-grid">{gachaItems.filter((x) => student.inventory.includes(x.id)).map((x) => <button key={x.id} className={student.equipped.includes(x.id) ? "equipped" : ""} onClick={() => toggle(x.id)}><ItemArt id={x.id} /><b>{x.name}</b><small>{x.kind}</small>{student.equipped.includes(x.id) && <i><CheckCircle2 />装備中</i>}</button>)}</div> : <div className="empty-closet">ガチャでアイテムを集めよう！</div>}</div>
+  </section>;
 }

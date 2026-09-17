@@ -58,7 +58,7 @@ export function loadState(): GameState {
 export function saveState(state: GameState) { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); window.dispatchEvent(new Event("sukusuku-state")); }
 export function todayKey() { return new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date()); }
 export function stageFor(points: number) {
-  if (points < 30) return { name: "たまご", next: 30 };
+  if (points < 30) return { name: "はじまり", next: 30 };
   if (points < 120) return { name: "ちびっこ", next: 120 };
   if (points < 300) return { name: "なかま", next: 300 };
   return { name: "マスター", next: 500 };
