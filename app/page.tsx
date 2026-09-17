@@ -42,7 +42,7 @@ export default function StudentApp() {
   function flash(text: string) { setToast(text); window.setTimeout(() => setToast(""), 2600); }
   if (!state) return <main className="loading">よみこみ中…</main>;
   if (!student) return <Login onLogin={(s) => { setStudentCode(s.code); setState(loadState()); }} />;
-  return <main className="student-shell">{toast && <div className="toast"><CheckCircle2 size={20} />{toast}</div>}<header className="student-header"><button className="avatar-button" onClick={() => setView("character")} aria-label="キャラクターを見る"><Mascot student={student} /></button><div className="header-brand"><span>すくすく数学</span><strong>ぴったり10</strong></div><div className="wallet"><span><Star size={17} fill="currentColor" />{student.points}</span><span><Coins size={17} />{student.coins}</span></div></header>
+  return <main className={`student-shell view-${view}`}>{toast && <div className="toast"><CheckCircle2 size={20} />{toast}</div>}<header className="student-header"><button className="avatar-button" onClick={() => setView("character")} aria-label="キャラクターを見る"><Mascot student={student} /></button><div className="header-brand"><span>すくすく数学</span><strong>ぴったり10</strong></div><div className="wallet"><span><Star size={17} fill="currentColor" />{student.points}</span><span><Coins size={17} />{student.coins}</span></div></header>
     {view !== "home" && <button className="back-button" onClick={() => setView("home")}><ArrowLeft size={20} />ホームにもどる</button>}
     {view === "home" && <Home student={student} state={state} onStudent={updateStudent} onView={setView} onMode={(m) => { setMode(m); setView("game"); }} flash={flash} />}
     {view === "game" && <Game student={student} mode={mode} onStudent={updateStudent} flash={flash} />}
